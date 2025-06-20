@@ -24,6 +24,19 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
+app.get("/api/whoami", (req, res) => {
+  // 1. IP address (Express sets this automatically; if behind a proxy it may come from X-Forwarded-For)
+  const ipaddress = req.ip;
+
+  // 2. Preferred language
+  const language = req.get("Accept-Language");
+
+  // 3. Software (user-agent)
+  const software = req.get("User-Agent");
+
+  res.json({ ipaddress, language, software });
+});
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
